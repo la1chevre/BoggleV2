@@ -5,6 +5,7 @@
         static void Main(string[] args)
         {
             Console.WriteLine("Hello, World!");
+            Console.WriteLine("test");
 
             Dictionnaire dico = new Dictionnaire("fr");
             for (int i = 0; i < dico.dictionnaire.Length; i++)
