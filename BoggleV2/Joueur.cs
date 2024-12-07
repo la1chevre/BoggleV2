@@ -16,7 +16,7 @@ namespace BoggleV2
         public int Score { get { return this.score; } }
         public string[] Mots { get { return this.mots; } }
 
-        public Joueur(string nom, int score, string[] mots)
+        public Joueur(string nom)
         {
             if (nom == null)
             {
@@ -25,8 +25,8 @@ namespace BoggleV2
             else
             {
                 this.nom = nom;
-                this.score = score;
-                this.mots = mots;
+                this.score = 0;
+                this.mots = new string[0];
             }
         }
 
@@ -66,9 +66,9 @@ namespace BoggleV2
 
         }
 
-        public void Add_Score(int score)
+        public void Add_Score(string mot)
         {
-            this.score += score;
+            this.score += mot.Length;  // A CHANGER POUR LE POID DES LETTRES
         }
 
         /// <summary>

@@ -36,6 +36,15 @@ namespace BoggleV2
 
         }
 
+        public bool RechDichoRecursif(string mot)
+        {
+            for(int i = 0; i < dictionnaire.Length; i++)
+            {
+                if (dictionnaire[i].ToUpper() == mot.ToUpper()) return true;
+            }
+            return false;
+        }
+
         /// <summary>
         /// Renvoie les spécificitées du tableau de mots : le nombre de mots par longeur, le nombre de mot commencant par chaque lettre et la langue
         /// </summary>

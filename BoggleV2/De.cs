@@ -13,13 +13,19 @@ namespace BoggleV2
 
         public De()
         {
-            char[] lettres = new char[25] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
+            List<char> lettres = new List<char>() {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
             this.faces = new char[6];
+            Random random = new Random();
+
+            
             for (int i = 0; i < 6; i++)
             {
-                Random random = new Random();
-                this.faces[i] = lettres[random.Next(0, 25)];
+                int n = random.Next(0, 25 - i);
+                this.faces[i] = lettres[n];
+                lettres.RemoveAt(n); // pour ne pas avoir 2 fois la même lettre sur 1 dé
+
             }
+                
         }
 
         /// <summary>
