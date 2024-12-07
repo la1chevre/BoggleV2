@@ -38,11 +38,7 @@ namespace BoggleV2
 
         public bool RechDichoRecursif(string mot)
         {
-            for(int i = 0; i < dictionnaire.Length; i++)
-            {
-                if (dictionnaire[i].ToUpper() == mot.ToUpper()) return true;
-            }
-            return false;
+            return true;
         }
 
         /// <summary>
