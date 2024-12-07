@@ -18,48 +18,41 @@ namespace BoggleV2
 
         public Plateau(int taille)
         {
-            if (taille >= 2)
+            bool VerifPlateau = true;
+            this.gameBoard = new De[taille, taille];
+
+            while (VerifPlateau)
             {
-                bool VerifPlateau = true;
-                this.gameBoard = new De[taille, taille];
-
-                while (VerifPlateau)
+                VerifPlateau = false;
+                Dictionary<char, int> ConditionLettre = this.DicoConditionLettre();
+                for (int i = 0; i < taille; i++)
                 {
-                    VerifPlateau = false;
-                    Dictionary<char, int> ConditionLettre = this.DicoConditionLettre();
-                    for (int i = 0; i < taille; i++)
+                    for (int j = 0; j < taille; j++)
                     {
-                        for (int j = 0; j < taille; j++)
-                        {
-                            gameBoard[i, j] = new De();
-                            gameBoard[i, j].lance();
+                        gameBoard[i, j] = new De();
+                        gameBoard[i, j].lance();
 
-                            ConditionLettre[gameBoard[i, j].Valeur()]--;
-                            if (ConditionLettre[gameBoard[i, j].Valeur()] < 0)
-                            {
-                                VerifPlateau = true;
-                            }
+                        ConditionLettre[gameBoard[i, j].Valeur()]--;
+                        if (ConditionLettre[gameBoard[i, j].Valeur()] < 0)
+                        {
+                            VerifPlateau = true;
                         }
                     }
-
                 }
-            }
-            else
-            {
-                Console.WriteLine("Taille incorrecte, taille de 2 ou plus");
+
             }
         }
 
         public string toString()
         {
-            string txt = "";
+            string txt = "\t";
             for (int i = 0; i < gameBoard.GetLength(0); i++)
             {
                 for (int j = 0; j < gameBoard.GetLength(0); j++)
                 {
                     txt += gameBoard[i, j].face + " ";
                 }
-                txt += "\n";
+                txt += "\n\t";
             }
             return txt;
         }
@@ -76,7 +69,7 @@ namespace BoggleV2
                     if (Test_AdjacenceRec(mot, i, j, new int[0][])) TestBon = true;
                 }
             }
-            return TestBon; // && Dico.RechDichoRecursif(mot);
+            return TestBon && Dico.RechDichoRecursif(mot);
 
         }
 
@@ -110,14 +103,15 @@ namespace BoggleV2
             // if (mot.Length == 1 && GameBoard[x, y].face == mot[0]) return true;
 
             // Regarde si la suite du mot est possible dans les cases avoisinante
-            return (Test_AdjacenceRec(mot.Substring(1, mot.Length - 1), x + 1, y, PositionsParcourues)
-                || Test_AdjacenceRec(mot.Substring(1, mot.Length - 1), x - 1, y, PositionsParcourues)
-                || Test_AdjacenceRec(mot.Substring(1, mot.Length - 1), x, y + 1, PositionsParcourues)
-                || Test_AdjacenceRec(mot.Substring(1, mot.Length - 1), x, y - 1, PositionsParcourues)
+            return(Test_AdjacenceRec(mot.Substring(1, mot.Length - 1), x + 1, y    , PositionsParcourues)
+                || Test_AdjacenceRec(mot.Substring(1, mot.Length - 1), x - 1, y    , PositionsParcourues)
+                || Test_AdjacenceRec(mot.Substring(1, mot.Length - 1), x    , y + 1, PositionsParcourues)
+                || Test_AdjacenceRec(mot.Substring(1, mot.Length - 1), x    , y - 1, PositionsParcourues)
                 || Test_AdjacenceRec(mot.Substring(1, mot.Length - 1), x + 1, y + 1, PositionsParcourues)
                 || Test_AdjacenceRec(mot.Substring(1, mot.Length - 1), x - 1, y - 1, PositionsParcourues)
                 || Test_AdjacenceRec(mot.Substring(1, mot.Length - 1), x + 1, y - 1, PositionsParcourues)
-                || Test_AdjacenceRec(mot.Substring(1, mot.Length - 1), x - 1, y + 1, PositionsParcourues));
+                || Test_AdjacenceRec(mot.Substring(1, mot.Length - 1), x - 1, y + 1, PositionsParcourues)
+                );
 
         }
         /// <summary>
@@ -144,7 +138,7 @@ namespace BoggleV2
         public Dictionary<char, int> DicoConditionLettre()
         {
             Dictionary<char, int> ConditionLettre = new Dictionary<char, int>();
-            string Chemin = "ConditionLettre.txt";
+            string Chemin = "ConditionLettres.txt";
             string[] lignes = File.ReadAllLines(Chemin);
             foreach (string ligne in lignes)
             {
