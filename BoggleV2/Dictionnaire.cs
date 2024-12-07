@@ -36,9 +36,25 @@ namespace BoggleV2
 
         }
 
-        public bool RechDichoRecursif(string mot)
+        public bool RechDichoRecursif(string mot,int debut,int fin)
         {
-            return true;
+            mot.ToUpper();
+
+            int milieu = (debut + fin) / 2;
+            if (debut >= fin)
+            {
+                if (this.dictionnaire[fin] == mot)
+                {
+                    return true;
+                }
+                else { return false; }
+            }
+            else
+            {
+                return RechDichoRecursif(mot,debut,milieu) || RechDichoRecursif(mot,milieu+1,fin);
+            }
+            
+
         }
 
         /// <summary>
