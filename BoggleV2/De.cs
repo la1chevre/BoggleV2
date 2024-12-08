@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BoggleV2
 {
-    internal class De
+    public class De
     {
         public char face;
         public char[] faces;

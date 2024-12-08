@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BoggleV2
 {
-    internal class Joueur
+    public class Joueur
     {
         string nom;
         int score;
@@ -38,18 +38,17 @@ namespace BoggleV2
         /// <returns>bool>true si le mot a déja été trouvé et false sinon</returns>
         public bool Contain(string mot)
         {
+            bool res = false;
             for (int i = 0; i < mots.Length; i++)
             {
                 if (mots[i] == mot)
                 {
-                    return true;
+                    res = true;
                 }
-                else
-                {
-                    return false;
-                }
+               
             }
-            return false;
+            return res;
+            
         }
 
         /// <summary>
