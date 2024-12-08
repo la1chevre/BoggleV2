@@ -69,7 +69,7 @@ namespace BoggleV2
                     if (Test_AdjacenceRec(mot, i, j, new int[0][])) TestBon = true;
                 }
             }
-            return TestBon && Dico.RechDichoRecursif(mot);
+            return TestBon && Dico.RechDichoRecursif(mot,0,mot.Length-1);
 
         }
 
