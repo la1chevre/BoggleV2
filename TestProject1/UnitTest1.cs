@@ -32,5 +32,29 @@ namespace BoggleV2
             }
             Assert.IsTrue(Unique);
         }
+
+        [TestMethod]
+        public void Test_TriFusion()
+        {
+            
+            string[] Atrie = { "gare", "arbre" };
+            string[] trie = { "arbre", "gare"};
+            bool estTrie = true;
+            string[] t  = Dictionnaire.TriFusion(Atrie, 0, Atrie.Length - 1);
+            for(int i = 0; i < t.Length; i++)
+            {
+                if (trie[i] != t[i])
+                {
+                     estTrie = false;
+                }
+            }
+            Assert.IsTrue(estTrie);
+            
+
+        }
+
+       
+
+
     }
 }

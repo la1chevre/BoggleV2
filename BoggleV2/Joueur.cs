@@ -65,10 +65,7 @@ namespace BoggleV2
 
         }
 
-        public void Add_Score(string mot)
-        {
-            this.score += mot.Length;  // A CHANGER POUR LE POID DES LETTRES
-        }
+        
 
         /// <summary>
         /// retourne une chaîne de caractères qui décrit unjoueur. 
@@ -83,6 +80,31 @@ namespace BoggleV2
                 res += mots[i] + "\n";
             }
             return res;
+        }
+        /// <summary>
+        /// Ajoute au joueur le score lié au mot donné en paramètres
+        /// </summary>
+        /// <param name="mot"> Le mot à partir duquel le score est calculé</param>
+        public void Add_Score(string mot)
+        {
+            mot = mot.ToUpper();
+
+            Dictionary<char, int> PoidLettre = new Dictionary<char, int>();
+            string Chemin = "PoidsLettres.txt";
+            string[] lignes = File.ReadAllLines(Chemin);
+
+            foreach (string ligne in lignes)
+            {
+                string[] partie = ligne.Split(';');
+                char key = partie[0][0];// la premiere partie est la lettre
+                PoidLettre[key] = int.Parse(partie[1]);// ajoute le score de la lettre
+            }
+
+
+            for (int i = 0; i < this.mots.Length; i++)
+            {
+                this.score += PoidLettre[mot[i]];
+            }
         }
     }
 }

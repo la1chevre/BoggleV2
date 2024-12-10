@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BoggleV2
 {
-    internal class Plateau
+    public class Plateau
     {
         De[,] gameBoard;
 
@@ -117,7 +117,7 @@ namespace BoggleV2
         /// <summary>
         /// Ajoute une valeur à la fin d'un tableau
         /// </summary>
-        /// <param name="tab">le tableauu à laquelle on ajoute la valeur</param>
+        /// <param name="tab">le tableau à laquelle on ajoute la valeur</param>
         /// <param name="val">la valeur à ajouter</param>
         /// <returns></returns>
         public static int[][] Append(int[][] tab, int[] val)
