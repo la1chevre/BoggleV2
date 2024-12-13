@@ -50,9 +50,6 @@ namespace BoggleV2
         }
 
 
-
-        
-
         /// <summary>
         /// Renvoie les spécificitées du tableau de mots : le nombre de mots par longeur, le nombre de mot commencant par chaque lettre et la langue
         /// </summary>
@@ -61,7 +58,8 @@ namespace BoggleV2
         {
             string res = "Langue : " + this.langue + "\nle nombre de mot avec des longueurs similaires : \n";
 
-            /// le nombre de mot avec des longueurs similaires
+            // le nombre de mot avec des longueurs similaires
+            
             Dictionary<int, int> NbMotLongeur = new Dictionary<int, int>();
             for (int i = 0; i < dictionnaire.Length; i++)
             {
@@ -80,7 +78,7 @@ namespace BoggleV2
                 res += "il y a " + NbMotLongeur[key] + " mot(s) de longueur " + key + "\n";
             }
 
-            /// le nombre de mot commencant par chaque lettre
+            // le nombre de mot commencant par chaque lettre
 
             Dictionary<char, int> NbMotLettre = new Dictionary<char, int>();
             for (int i = 0; i < dictionnaire.Length; i++)
@@ -101,6 +99,33 @@ namespace BoggleV2
             }
 
             return res;
+        }
+
+
+        /// <summary>
+        /// Recherche d'une valeur dans un tableau
+        /// </summary>
+        /// <param name="t"> le tableau doit être trié</param>
+        /// <param name="val">valeur a trouvé</param>
+        /// <param name="fin"></param>
+        /// <param name="debut"></param>
+        /// <returns>true si le tableau contient la valeur</returns>
+        public static bool RechercheDichoRecursif(string[] t, string val, int fin, int debut)
+        {
+            int milieu = (debut + fin) / 2;
+            if (String.Compare(t[milieu], val) < 0)
+            {
+                return RechercheDichoRecursif(t, val, debut, milieu);
+            }
+
+            else if (String.Compare(t[milieu], val) > 0)
+            {
+                return RechercheDichoRecursif(t, val, milieu+1, fin);
+            }
+            else
+            {
+                return true;
+            }
         }
 
 
@@ -198,6 +223,24 @@ namespace BoggleV2
 
 
         // TRI INSERTION
+
+
+        public static string[] TriInsertion(string[] dictionnaire)
+        {
+            for (int i = 1; i < dictionnaire.Length; i++)
+            {
+                string mort = dictionnaire[i];
+                int j = i - 1;
+                while (j >= 0 && dictionnaire[j].CompareTo(dictionnaire[i]) > 0)
+                {
+                    dictionnaire[j + 1] = dictionnaire[j];
+                    j--;
+                }
+
+                dictionnaire[j + 1] = mort;
+            }
+            return dictionnaire;
+        }
 
         #endregion
     }

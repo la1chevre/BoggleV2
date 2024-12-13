@@ -20,11 +20,11 @@ namespace BoggleV2
         {
             bool VerifPlateau = true;
             this.gameBoard = new De[taille, taille];
-
+            Dictionary<char, int> ConditionLettre = this.DicoConditionLettre(taille);
             while (VerifPlateau)
             {
                 VerifPlateau = false;
-                Dictionary<char, int> ConditionLettre = this.DicoConditionLettre();
+                
                 for (int i = 0; i < taille; i++)
                 {
                     for (int j = 0; j < taille; j++)
@@ -33,7 +33,7 @@ namespace BoggleV2
                         gameBoard[i, j].lance();
 
                         ConditionLettre[gameBoard[i, j].Valeur()]--;
-                        if (ConditionLettre[gameBoard[i, j].Valeur()] < 0)
+                        if (ConditionLettre[gameBoard[i, j].Valeur()] <= 0)
                         {
                             VerifPlateau = true;
                         }
@@ -69,7 +69,7 @@ namespace BoggleV2
                     if (Test_AdjacenceRec(mot, i, j, new int[0][])) TestBon = true;
                 }
             }
-            return TestBon && Dico.RechDichoRecursif(mot,0,Dico.dictionnaire.Length-1);
+            return TestBon && Dictionnaire.RechercheDichoRecursif(Dico.dictionnaire,mot,0,Dico.dictionnaire.Length-1);
 
         }
 
@@ -135,20 +135,23 @@ namespace BoggleV2
         /// Rempli un dictionnaire avec comme clé une lettre et comme valeur son nombre d'occurences max dans le plateau
         /// </summary>
         /// <returns></returns>
-        public Dictionary<char, int> DicoConditionLettre()
+        public Dictionary<char, int> DicoConditionLettre(int taille)
         {
             Dictionary<char, int> ConditionLettre = new Dictionary<char, int>();
             string Chemin = "ConditionLettres.txt";
-            string[] lignes = File.ReadAllLines(Chemin);
-            foreach (string ligne in lignes)
+            try
             {
-                string[] partie = ligne.Split(';');
-                char key = partie[0][0];// la premiere partie est la lettre
-                ConditionLettre[key] = int.Parse(partie[1]);// ajoute la valeur corrspondant au nombre max d'occurence de la lettre dans le plateau
+                string[] lignes = File.ReadAllLines(Chemin);
+                foreach (string ligne in lignes)
+                {
+                    string[] partie = ligne.Split(';');
+                    char key = partie[0][0];// la premiere partie est la lettre
+                    ConditionLettre[key] = (int.Parse(partie[1])*taille)/4;// ajoute la valeur corrspondant au nombre max d'occurence de la lettre dans le plateau
 
-
-
+                }
             }
+            catch(FileNotFoundException e) { Console.WriteLine("fichier introuvable" + e.Message); }
+            
             return ConditionLettre;
 
 
