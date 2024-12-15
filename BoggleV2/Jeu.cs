@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SkiaSharp;
 
 namespace BoggleV2
 {
@@ -58,6 +61,7 @@ namespace BoggleV2
                 if (plateau.Test_Plateau(dico.dictionnaire[i], dico))
                 {
                     Console.WriteLine(dico.dictionnaire[i]);
+                    joueur2.Add_Mot(dico.dictionnaire[i]);
                     joueur2.Add_Score(dico.dictionnaire[i]);
                 }
             }
@@ -65,6 +69,23 @@ namespace BoggleV2
             Console.WriteLine("Fin. \n Son score est désormais de " + joueur2.Score + ".");
 
 
+
+            // Traitement fin de partie
+            if (joueur1.Score > joueur2.Score)
+            {
+                Console.WriteLine("\n\n\tVous avez gagné !!!\n\tVotre score est de " + joueur1.Score + " et l'IA de " + joueur2.Score + ".");
+            }
+            else if (joueur2.Score > joueur1.Score)
+            {
+
+                Console.WriteLine("\n\n\tVous avez perdu !!!\n\tVotre score est de " + joueur1.Score + " et l'IA de " + joueur2.Score + ".\n\tNe vous en faites pas l'IA est imbatable.");
+            }
+            else
+            {
+                Console.WriteLine("\n\n\tIl y a égalité !!! Vous et l'IA avez un score de " + joueur1.Score + ". Vous pouvez vous arrêter là l'IA est imbattable.");
+            }
+
+            nuagedeMots();
 
         }
 
@@ -89,7 +110,7 @@ namespace BoggleV2
             for (int i = 0; i < nombreDeRounds; i++)
             {
                 if (i != 0) { plateau.Melange(); }
-                
+
 
                 Console.WriteLine("\n\tLe tours " + (i + 1) + " va commencer.");
                 Console.WriteLine(joueur1.Nom + " peut commencer.");
@@ -125,6 +146,8 @@ namespace BoggleV2
             {
                 Console.WriteLine("\n\n\tIl y a égalité !!! Les deux joueurs ont un score de " + joueur1.Score + ".");
             }
+
+            nuagedeMots();
         }
 
 
@@ -158,8 +181,8 @@ namespace BoggleV2
                 if (plateau.Test_Plateau(mot, dico) && !ok)
                 {
                     mots.Add(mot);
-                    joueur.Add_Mot(mot);
 
+                    joueur.Add_Mot(mot);
                     joueur.Add_Score(mot);
 
                     ok = true;
@@ -208,13 +231,26 @@ namespace BoggleV2
         public void CreationPlateau()
         {
             Console.WriteLine("\nQuelle taille de plateau voulez-vous ?");
+            string rep = "";
             int n = 0;
+            bool ok = true;
             while (n < 3 || n > 10)
             {
-                n = Convert.ToInt32(Console.ReadLine());
-                if (n < 3) Console.WriteLine("\tLa taille est trop petite (3 ou plus), veuillez donner une taille valide.");
+                ok = true;
+                rep = Console.ReadLine();
+                try
+                {
+                    n = Convert.ToInt32(rep);
+                }
+                catch
+                {
+                    Console.WriteLine("\tVeuillez entrer un nombre.");
+                    ok = false;
+                }
 
-                if (n > 10) Console.WriteLine("\tLa taille est trop grande (10 ou moins), veuillez donner une taille valide.");
+                if (n < 3 && ok) Console.WriteLine("\tLa taille est trop petite (3 ou plus), veuillez donner une taille valide.");
+
+                if (n > 10 && ok) Console.WriteLine("\tLa taille est trop grande (10 ou moins), veuillez donner une taille valide.");
             }
             Console.WriteLine("\tLa taille définie est " + n + ".");
 
@@ -225,11 +261,23 @@ namespace BoggleV2
         public void DemandeTemps()
         {
             Console.WriteLine("\nCombien de temps doit durer un tour ? \n\tLe temps est en secondes.");
+            string rep = "";
             int n = 0;
+            bool ok = true;
             while (n < 5)
             {
-                n = Convert.ToInt32(Console.ReadLine());
-                if (n < 5) Console.WriteLine("\tIl n'y a pas assez de temps (5s ou plus), veuillez donner un temps valide.");
+                ok = true;
+                rep = Console.ReadLine();
+                try
+                {
+                    n = Convert.ToInt32(rep);
+                }
+                catch
+                {
+                    Console.WriteLine("\tVeuillez entrer un nombre.");
+                    ok = false;
+                }
+                if (n < 5 && ok) Console.WriteLine("\tIl n'y a pas assez de temps (5s ou plus), veuillez donner un temps valide.");
             }
             Console.WriteLine("\tLe temps défini est " + n + "s.");
             dureeRound = n;
@@ -238,17 +286,131 @@ namespace BoggleV2
         public int DemandeRound()
         {
             Console.WriteLine("\nCombien de tours doit durer la partie ? \n\tUn tour est joué par chacun des joueurs.");
+            string rep = "";
             int n = 0;
+            bool ok = true;
             while (n < 1)
             {
-                n = Convert.ToInt32(Console.ReadLine());
-                if (n < 1) Console.WriteLine("\tIl n'y a pas assez de tours (1 ou plus), veuillez donner un nombre valide.");
+                ok = true;
+                rep = Console.ReadLine();
+                try
+                {
+                    n = Convert.ToInt32(rep);
+                }
+                catch
+                {
+                    Console.WriteLine("\tVeuillez entrer un nombre.");
+                    ok = false;
+                }
+                if (n < 1 && ok) Console.WriteLine("\tIl n'y a pas assez de tours (1 ou plus), veuillez donner un nombre valide.");
             }
             Console.WriteLine("\tLe temps défini est " + n + ".");
             return n;
         }
 
+        public void nuagedeMots()
+        {
+            List<string> mots = new List<string>();
+            for (int i = 0; i < joueur1.Mots.Length; i++)
+            {
+                if (joueur1.Mots[i] != null) mots.Add(joueur1.Mots[i].ToUpper());
+            }
+            for (int i = 0; i < joueur2.Mots.Length; i++)
+            {
+                if (joueur2.Mots[i] != null && !mots.Contains(joueur2.Mots[i].ToUpper())) mots.Add(joueur2.Mots[i].ToUpper()); Console.WriteLine(joueur2.Mots[i]);
+            }
 
 
+
+            // Calcul des scores des mots
+            Dictionary<string, int> MotsScores = new Dictionary<string, int>();
+            foreach (var mot in mots)
+            {
+                MotsScores[mot] = joueur1.CalculScore(mot);
+            }
+
+            int width = 800;
+            int height = 600;
+
+
+            // Créer une image vierge avec SkiaSharp
+            using (SKBitmap bitmap = new SKBitmap(width, height))
+            using (SKCanvas canvas = new SKCanvas(bitmap))
+            {
+                // Remplir le fond avec une couleur blanche
+                canvas.Clear(SKColors.White);
+
+                Random random = new Random();
+
+                // Position initiale pour dessiner les mots
+                int x = 10, y = 10;
+
+                foreach (var entry in MotsScores)
+                {
+                    string mot = entry.Key;
+                    int score = entry.Value;
+
+                    // Taille de police proportionnelle au score
+                    int fontSize = Math.Max(10, score * 5);
+                    using (SKPaint paint = new SKPaint
+                    {
+                        Typeface = SKTypeface.Default,
+                        TextSize = fontSize,
+                        IsAntialias = true,
+                        Color = new SKColor(
+                            (byte)random.Next(50, 256),
+                            (byte)random.Next(50, 256),
+                            (byte)random.Next(50, 256)
+                        )
+                    })
+                    {
+                        // Calculer la taille du mot
+                        SKRect bounds = new SKRect();
+                        paint.MeasureText(mot, ref bounds);
+
+                        // Si le mot dépasse les limites, sauter à une nouvelle ligne
+                        if (x + bounds.Width > width)
+                        {
+                            x = 10;
+                            y += (int)bounds.Height + 10;
+                        }
+
+                        // Dessiner le mot
+                        canvas.DrawText(mot, x, y, paint);
+
+                        // Mettre à jour la position pour le prochain mot
+                        x += (int)bounds.Width + 10;
+
+                        // Si la hauteur dépasse la taille de l'image, arrêter d'ajouter des mots
+                        if (y + bounds.Height > height)
+                            break;
+                    }
+                }
+
+                // Sauvegarder l'image dans un fichier PNG
+                using (SKImage image = SKImage.FromBitmap(bitmap))
+                using (SKData data = image.Encode(SKEncodedImageFormat.Png, 100))
+                using (System.IO.Stream stream = System.IO.File.OpenWrite("nuage_de_mots.png"))
+                {
+                    data.SaveTo(stream);
+                }
+
+            }
+
+
+            Console.WriteLine($"Nuage de mots généré : {"nuage_de_mots.png"}");
+
+            string filePath = "nuage_de_mots.png";
+
+
+            // Ouvrir le fichier PNG avec l'application par défaut
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = filePath,
+                UseShellExecute = true
+            });
+
+            Console.WriteLine($"Image ouverte : {filePath}");
+        }
     }
 }
