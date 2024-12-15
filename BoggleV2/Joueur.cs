@@ -61,6 +61,11 @@ namespace BoggleV2
         {
             string[] new_mots = new string[mots.Length + 1];
             new_mots[mots.Length] = mot;
+            for (int i = 0;i < this.mots.Length; i++)
+            {
+                new_mots[i] = this.mots[i];
+            }
+
             this.mots = new_mots;
 
         }
@@ -86,9 +91,23 @@ namespace BoggleV2
         /// <summary>
         /// Ajoute au joueur le score lié au mot donné en paramètres
         /// </summary>
-        /// <param name="mot"> Le mot à partir duquel le score est calculé</param>
+        /// <param name="mot">Le mot à partir duquel le score est calculé</param>
         public void Add_Score(string mot)
         {
+            this.score += CalculScore(mot);
+        }
+
+
+        /// <summary>
+        /// Calcul le score lié à un mot
+        /// </summary>
+        /// <param name="mot">Le mot à partir duquel le score est calculé</param>
+        /// <returns>int score</returns>
+        public int CalculScore(string mot)
+        {
+            if(mot == null) return 0;
+
+            int Score = 0;
             mot = mot.ToUpper();
 
             Dictionary<char, int> PoidLettre = new Dictionary<char, int>();
@@ -103,10 +122,11 @@ namespace BoggleV2
             }
 
 
-            for (int i = 0; i < this.mots.Length; i++)
+            for (int i = 0; i < mot.Length; i++)
             {
-                this.score += PoidLettre[mot[i]];
+                Score += PoidLettre[mot[i]];
             }
+            return Score;
         }
     }
 }
