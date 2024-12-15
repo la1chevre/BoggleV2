@@ -343,7 +343,7 @@ namespace BoggleV2
                 Random random = new Random();
 
                 // Position initiale pour dessiner les mots
-                int x = 10, y = 10;
+                int x = 300, y = 200;
 
                 foreach (var entry in MotsScores)
                 {
