@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -156,6 +156,32 @@ namespace BoggleV2
 
 
 
+        }
+
+        /// <summary>
+        /// Melange le plateau pour en créer un nouveau à partir des dés déjà existants.
+        /// </summary>
+        public void Melange()
+        {
+            List<De> Des = new List<De>();
+            for (int i = 0; i < this.gameBoard.GetLength(0); i++)
+            {
+                for (int j = 0; j < this.gameBoard.GetLength(1); j++)
+                {
+                    Des.Add(this.gameBoard[i, j]);
+                }
+            }
+            Random random = new Random();
+            for (int i = 0; i < this.gameBoard.GetLength(0); i++)
+            {
+                for (int j = 0; j < this.gameBoard.GetLength(1); j++)
+                {
+                    int n = random.Next(0, 25 - i);
+                    this.gameBoard[i, j] = Des[n];
+                    Des.RemoveAt(n);
+                    this.gameBoard[i, j].lance();
+                }
+            }
         }
     }
 }
