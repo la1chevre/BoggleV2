@@ -21,27 +21,23 @@ namespace BoggleV2
             bool VerifPlateau = true;
             this.gameBoard = new De[taille, taille];
             Dictionary<char, int> ConditionLettre = this.DicoConditionLettre(taille);
-            while (VerifPlateau)
-            {
-                VerifPlateau = false;
+            
                 
-                for (int i = 0; i < taille; i++)
+            for (int i = 0; i < taille; i++)
+            {
+                for (int j = 0; j < taille; j++)
                 {
-                    for (int j = 0; j < taille; j++)
+                    gameBoard[i, j] = new De();
+                    gameBoard[i, j].lance();
+                    ConditionLettre[gameBoard[i, j].face]--;
+                    while (ConditionLettre[gameBoard[i, j].face] < 0)
                     {
-                        gameBoard[i, j] = new De();
-                         gameBoard[i, j].lance();
-
-                        ConditionLettre[gameBoard[i,j].face]--;
-                        if (ConditionLettre[gameBoard[i, j].face] < 0)
-                        {
-                            VerifPlateau = true;
-                            
-                        }
+                        gameBoard[i, j].lance();
                     }
                 }
-
             }
+
+            
         }
 
         public string toString()
@@ -145,7 +141,7 @@ namespace BoggleV2
                 string[] lignes = File.ReadAllLines(Chemin);
                 foreach (string ligne in lignes)
                 {
-                    Console.WriteLine(ligne);
+                    
                     string[] partie = ligne.Split(';');
                     char key = partie[0][0];// la premiere partie est la lettre
                     ConditionLettre[key] = int.Parse(partie[1]);// ajoute la valeur corrspondant au nombre max d'occurence de la lettre dans le plateau

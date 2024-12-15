@@ -88,7 +88,8 @@ namespace BoggleV2
 
             for (int i = 0; i < nombreDeRounds; i++)
             {
-                plateau.Melange();
+                if (i != 0) { plateau.Melange(); }
+                
 
                 Console.WriteLine("\n\tLe tours " + (i + 1) + " va commencer.");
                 Console.WriteLine(joueur1.Nom + " peut commencer.");
@@ -241,7 +242,7 @@ namespace BoggleV2
             while (n < 1)
             {
                 n = Convert.ToInt32(Console.ReadLine());
-                if (n < 5) Console.WriteLine("\tIl n'y a pas assez de tours (1 ou plus), veuillez donner un nombre valide.");
+                if (n < 1) Console.WriteLine("\tIl n'y a pas assez de tours (1 ou plus), veuillez donner un nombre valide.");
             }
             Console.WriteLine("\tLe temps défini est " + n + ".");
             return n;

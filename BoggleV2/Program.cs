@@ -8,15 +8,19 @@ namespace BoggleV2
 
         static void Main(string[] args)
         {
-            //Jeu partie = new Jeu();
+            Jeu partie = new Jeu();
             //Temps_ExecutionTri();
-            Temps_ExecutionRecherche();
+            //Temps_ExecutionRecherche();
             //Dictionnaire d = new Dictionnaire("fr");
             //string a = d.toString();
             //Console.WriteLine(a);
 
         }
 
+
+        /// <summary>
+        /// Il faut retirer le tri du constructeur Dictionnaire pour tester
+        /// </summary>
         static void Temps_ExecutionTri()
         {
 
@@ -34,6 +38,7 @@ namespace BoggleV2
             chrono.Restart();
             string[] testTri2 = Dictionnaire.TriFusion(d2.dictionnaire,0,d2.dictionnaire.Length-1);
             chrono.Stop();
+            
             Console.WriteLine("l'algo de tri fusion, a pris " + chrono.ElapsedMilliseconds + "ms pour s'effectuer");
 
             
@@ -54,7 +59,7 @@ namespace BoggleV2
 
             Dictionnaire d1 = new Dictionnaire("fr");
             chrono.Start();
-            bool res = Dictionnaire.RechercheDichoRecursif(d1.dictionnaire, mot, d1.dictionnaire.Length - 1, 0);
+            bool res = Dictionnaire.RechercheDichoRecursif(d1.dictionnaire, mot, 0, d1.dictionnaire.Length - 1);
             Console.WriteLine(res);
             chrono.Stop();
             Console.WriteLine("la recherche dichotomique a pris "+chrono.ElapsedMilliseconds+"ms pour s'effectuer");

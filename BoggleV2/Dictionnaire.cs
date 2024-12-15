@@ -22,6 +22,7 @@ namespace BoggleV2
                 try
                 {
                     this.dictionnaire = File.ReadAllText(Chemin).Split(' ');
+                    dictionnaire = TriFusion(dictionnaire, 0, dictionnaire.Length - 1);
                     this.langue = langue;
                 }
                 catch (FileNotFoundException e) { Console.WriteLine("echec lors de la lecture du fichier" + e.Message); }
@@ -34,6 +35,7 @@ namespace BoggleV2
                 try
                 {
                     this.dictionnaire = File.ReadAllText(Chemin).Split(' ');
+                    dictionnaire = TriFusion(dictionnaire, 0, dictionnaire.Length - 1);
                     this.langue = langue;
                 }
                 catch (FileNotFoundException e) { Console.WriteLine("echec lors de la lecture du fichier" + e.Message); }
@@ -44,7 +46,7 @@ namespace BoggleV2
                 this.dictionnaire = new string[0];
             }
 
-            //dictionnaire = TriFusion(dictionnaire, 0, dictionnaire.Length - 1);
+            
         }
 
 
@@ -112,17 +114,17 @@ namespace BoggleV2
         /// <param name="fin">indice fin de recherche</param>
         /// <param name="debut">indice debut de recherche</param>
         /// <returns>true si le tableau contient la valeur</returns>
-        public static bool RechercheDichoRecursif(string[] t, string val, int fin, int debut)
+        public static bool RechercheDichoRecursif(string[] t, string val, int debut, int fin)
         {
             val = val.ToUpper();
             int milieu = (debut + fin) / 2;
-            if (debut > fin)
+            if (debut > fin || milieu < 0 || milieu >= t.Length)
             {
                 return false;
             }
             if (String.Compare(t[milieu], val) > 0)
             {
-                return RechercheDichoRecursif(t, val, debut, milieu);
+                return RechercheDichoRecursif(t, val, debut, milieu-1);
             }
 
             else if (String.Compare(t[milieu], val) < 0)
@@ -139,9 +141,9 @@ namespace BoggleV2
         {
             bool res = false;
             val = val.ToUpper();
-            for(int i = 1; i < t.Length; i++)
+            foreach(string s in t) 
             {
-                if (t[i] == val)
+                if (s == val)
                 {
                     res = true;
                 }

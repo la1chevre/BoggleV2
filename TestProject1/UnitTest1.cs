@@ -58,8 +58,9 @@ namespace BoggleV2
         public void Test_RechercheDicho()
         {
             string[] mots = { "ARBRE",  "ATTENDRE", "GARE", "SERRE" ,"ZEBRE"};
-            Assert.IsTrue(Dictionnaire.RechercheDichoRecursif(mots,"gare",mots.Length-1,0));
-            Assert.IsFalse(Dictionnaire.RechercheDichoRecursif(mots, "vin", mots.Length - 1, 0));
+            Array.Sort(mots);
+            Assert.IsTrue(Dictionnaire.RechercheDichoRecursif(mots,"GARE",mots.Length-1,0));
+            Assert.IsFalse(Dictionnaire.RechercheDichoRecursif(mots, "VIN", mots.Length - 1, 0));
 
         }
 
