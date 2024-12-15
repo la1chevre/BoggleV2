@@ -36,6 +36,7 @@ namespace BoggleV2
                         if (ConditionLettre[gameBoard[i, j].face] < 0)
                         {
                             VerifPlateau = true;
+                            
                         }
                     }
                 }
@@ -69,7 +70,7 @@ namespace BoggleV2
                     if (Test_AdjacenceRec(mot, i, j, new int[0][])) TestBon = true;
                 }
             }
-            return TestBon && Dictionnaire.RechercheDichoRecursif(Dico.dictionnaire,mot,0,Dico.dictionnaire.Length-1);
+            return TestBon &&  Dictionnaire.RechercheDichoRecursif(Dico.dictionnaire,mot,0,Dico.dictionnaire.Length-1);
 
         }
 
@@ -144,9 +145,10 @@ namespace BoggleV2
                 string[] lignes = File.ReadAllLines(Chemin);
                 foreach (string ligne in lignes)
                 {
+                    Console.WriteLine(ligne);
                     string[] partie = ligne.Split(';');
                     char key = partie[0][0];// la premiere partie est la lettre
-                    ConditionLettre[key] = int.Parse(partie[1])*taille/4;// ajoute la valeur corrspondant au nombre max d'occurence de la lettre dans le plateau
+                    ConditionLettre[key] = int.Parse(partie[1]);// ajoute la valeur corrspondant au nombre max d'occurence de la lettre dans le plateau
 
                 }
             }

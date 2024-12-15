@@ -44,7 +44,7 @@ namespace BoggleV2
                 this.dictionnaire = new string[0];
             }
 
-            dictionnaire = TriFusion(dictionnaire, 0, dictionnaire.Length - 1);
+            //dictionnaire = TriFusion(dictionnaire, 0, dictionnaire.Length - 1);
         }
 
 
@@ -105,7 +105,7 @@ namespace BoggleV2
 
 
         /// <summary>
-        /// Recherche d'une valeur dans un tableau
+        /// Recherche d'une valeur dans un tableau trié
         /// </summary>
         /// <param name="t"> le tableau doit être trié</param>
         /// <param name="val">valeur a trouvé</param>
@@ -114,13 +114,18 @@ namespace BoggleV2
         /// <returns>true si le tableau contient la valeur</returns>
         public static bool RechercheDichoRecursif(string[] t, string val, int fin, int debut)
         {
+            val = val.ToUpper();
             int milieu = (debut + fin) / 2;
-            if (String.Compare(t[milieu], val) < 0)
+            if (debut > fin)
+            {
+                return false;
+            }
+            if (String.Compare(t[milieu], val) > 0)
             {
                 return RechercheDichoRecursif(t, val, debut, milieu);
             }
 
-            else if (String.Compare(t[milieu], val) > 0)
+            else if (String.Compare(t[milieu], val) < 0)
             {
                 return RechercheDichoRecursif(t, val, milieu+1, fin);
             }
@@ -132,14 +137,16 @@ namespace BoggleV2
 
         public static bool RechercheClassique(string[] t , string val)
         {
-            for(int i = 0; i < t.Length; i++)
+            bool res = false;
+            val = val.ToUpper();
+            for(int i = 1; i < t.Length; i++)
             {
                 if (t[i] == val)
                 {
-                    return true;
+                    res = true;
                 }
             }
-            return false;
+            return res;
         }
 
 
@@ -233,8 +240,6 @@ namespace BoggleV2
         }
 
 
-        // TRI QUICKSORT
-
 
         // TRI INSERTION
 
@@ -243,15 +248,15 @@ namespace BoggleV2
         {
             for (int i = 1; i < dictionnaire.Length; i++)
             {
-                string mort = dictionnaire[i];
+                string mot = dictionnaire[i];
                 int j = i - 1;
-                while (j >= 0 && dictionnaire[j].CompareTo(dictionnaire[i]) > 0)
-                {
+                while (j >= 0 && String.CompareOrdinal(dictionnaire[j], mot) > 0) 
+                    {
                     dictionnaire[j + 1] = dictionnaire[j];
                     j--;
                 }
 
-                dictionnaire[j + 1] = mort;
+                dictionnaire[j + 1] = mot;
             }
             return dictionnaire;
         }
