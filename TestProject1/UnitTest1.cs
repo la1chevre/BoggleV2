@@ -37,8 +37,8 @@ namespace BoggleV2
         public void Test_TriFusion()
         {
             
-            string[] Atrie = { "gare", "arbre" };
-            string[] trie = { "arbre", "gare"};
+            string[] Atrie = { "gare", "arbre","serre","trouve","attendre" };
+            string[] trie = { "arbre","attendre", "gare","serre","trouve"};
             bool estTrie = true;
             string[] t  = Dictionnaire.TriFusion(Atrie, 0, Atrie.Length - 1);
             for(int i = 0; i < t.Length; i++)

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,10 +30,10 @@ namespace BoggleV2
                     for (int j = 0; j < taille; j++)
                     {
                         gameBoard[i, j] = new De();
-                        gameBoard[i, j].lance();
+                         gameBoard[i, j].lance();
 
-                        ConditionLettre[gameBoard[i, j].Valeur()]--;
-                        if (ConditionLettre[gameBoard[i, j].Valeur()] <= 0)
+                        ConditionLettre[gameBoard[i,j].face]--;
+                        if (ConditionLettre[gameBoard[i, j].face] < 0)
                         {
                             VerifPlateau = true;
                         }
@@ -61,7 +61,7 @@ namespace BoggleV2
         {
             mot = mot.ToUpper();
             bool TestBon = false;
-            // pour cahque fois que la case = première lettre on fait le test d'adjacence de toute les lettres
+            // pour chaque fois que la case = première lettre on fait le test d'adjacence de toute les lettres
             for (int i = 0; i < gameBoard.GetLength(0); i++)
             {
                 for (int j = 0; j < gameBoard.GetLength(0); j++)
@@ -78,8 +78,8 @@ namespace BoggleV2
         /// Fonctionne de manière récursive
         /// </summary>
         /// <param name="mot">Le mot à tester</param>
-        /// <param name="x">la coordonée de la première lettre d mot selon x</param>
-        /// <param name="y">la coordonée de la première lettre d mot selon y</param>
+        /// <param name="x">la coordonée de la première lettre du mot selon x</param>
+        /// <param name="y">la coordonée de la première lettre du mot selon y</param>
         /// <param name="PositionsParcourues">les positions des lettres utilisées du plateau, doit être de taille 0 lors du premier appel</param>
         /// <returns></returns>
         public bool Test_AdjacenceRec(string mot, int x, int y, int[][] PositionsParcourues)
@@ -120,7 +120,7 @@ namespace BoggleV2
         /// <param name="tab">le tableau à laquelle on ajoute la valeur</param>
         /// <param name="val">la valeur à ajouter</param>
         /// <returns></returns>
-        public static int[][] Append(int[][] tab, int[] val)
+        static int[][] Append(int[][] tab, int[] val)
         {
             int[][] result = new int[tab.Length + 1][];
             for (int i = 0; i < tab.Length; i++)
@@ -146,7 +146,7 @@ namespace BoggleV2
                 {
                     string[] partie = ligne.Split(';');
                     char key = partie[0][0];// la premiere partie est la lettre
-                    ConditionLettre[key] = (int.Parse(partie[1])*taille)/4;// ajoute la valeur corrspondant au nombre max d'occurence de la lettre dans le plateau
+                    ConditionLettre[key] = int.Parse(partie[1])*taille/4;// ajoute la valeur corrspondant au nombre max d'occurence de la lettre dans le plateau
 
                 }
             }
@@ -156,6 +156,32 @@ namespace BoggleV2
 
 
 
+        }
+
+        /// <summary>
+        /// Melange le plateau pour en créer un nouveau à partir des dés déjà existants.
+        /// </summary>
+        public void Melange()
+        {
+            List<De> Des = new List<De>();
+            for (int i = 0; i < this.gameBoard.GetLength(0); i++)
+            {
+                for (int j = 0; j < this.gameBoard.GetLength(1); j++)
+                {
+                    Des.Add(this.gameBoard[i, j]);
+                }
+            }
+            Random random = new Random();
+            for (int i = 0; i < this.gameBoard.GetLength(0); i++)
+            {
+                for (int j = 0; j < this.gameBoard.GetLength(1); j++)
+                {
+                    int n = random.Next(0, 25 - i);
+                    this.gameBoard[i, j] = Des[n];
+                    Des.RemoveAt(n);
+                    this.gameBoard[i, j].lance();
+                }
+            }
         }
     }
 }

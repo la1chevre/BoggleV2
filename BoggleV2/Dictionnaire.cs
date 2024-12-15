@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -10,7 +10,7 @@ namespace BoggleV2
     public class Dictionnaire
     {
         public string[] dictionnaire;
-        string langue;
+        public string langue;
 
 
         
@@ -42,11 +42,9 @@ namespace BoggleV2
             {
                 Console.WriteLine("Langue inconnue");
                 this.dictionnaire = new string[0];
-
-
             }
 
-
+            dictionnaire = TriFusion(dictionnaire, 0, dictionnaire.Length - 1);
         }
 
 
@@ -56,12 +54,12 @@ namespace BoggleV2
         /// <returns></returns>
         public string toString()
         {
-            string res = "Langue : " + this.langue + "\nle nombre de mot avec des longueurs similaires : \n";
+            string res = "Langue : " + this.langue + "\n\nle nombre de mot avec des longueurs similaires : \n";
 
             // le nombre de mot avec des longueurs similaires
             
             Dictionary<int, int> nbMotLongeur = new Dictionary<int, int>();
-            for (int i = 0; i < dictionnaire.Length; i++)
+            for (int i = 1; i < dictionnaire.Length; i++)
             {
                 if (nbMotLongeur.ContainsKey(dictionnaire[i].Length))
                 {
@@ -81,21 +79,25 @@ namespace BoggleV2
             // le nombre de mot commencant par chaque lettre
 
             Dictionary<char, int> nbMotLettre = new Dictionary<char, int>();
-            for (int i = 0; i < dictionnaire.Length; i++)
+            for (int i = 1; i < dictionnaire.Length; i++)
             {
-                if (nbMotLettre.ContainsKey(dictionnaire[i][0]))
+                if (dictionnaire[i] != null)
                 {
-                    nbMotLettre[dictionnaire[i][0]]++;
+                    if (nbMotLettre.ContainsKey(dictionnaire[i][0]))
+                    {
+                        nbMotLettre[dictionnaire[i][0]]++;
+                    }
+                    else
+                    {
+                        nbMotLettre.Add(dictionnaire[i][0], 1);
+                    }
                 }
-                else
-                {
-                    nbMotLettre.Add(dictionnaire[i][0], 1);
-                }
+                
             }
-            res += "le nombre de mot commencant par chaque lettre : \n";
+            res += "\nle nombre de mot commencant par chaque lettre : \n";
             foreach (char key in nbMotLettre.Keys)
             {
-                res += "il y a " + nbMotLettre[key] + "commencant par la lettre " + key;
+                res += "il y a " + nbMotLettre[key] + " commencant par la lettre " + key+"\n";
             }
 
             return res;
@@ -126,6 +128,18 @@ namespace BoggleV2
             {
                 return true;
             }
+        }
+
+        public static bool RechercheClassique(string[] t , string val)
+        {
+            for(int i = 0; i < t.Length; i++)
+            {
+                if (t[i] == val)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
 
@@ -245,4 +259,3 @@ namespace BoggleV2
         #endregion
     }
 }
-

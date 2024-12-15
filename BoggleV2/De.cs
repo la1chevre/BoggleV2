@@ -54,10 +54,5 @@ namespace BoggleV2
             return res;
         }
 
-        public char Valeur()
-        {
-            Random random = new Random();
-            return this.faces[random.Next(0, 6)];
-        }
     }
 }
