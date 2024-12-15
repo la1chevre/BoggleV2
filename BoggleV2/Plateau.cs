@@ -174,8 +174,9 @@ namespace BoggleV2
             {
                 for (int j = 0; j < this.gameBoard.GetLength(1); j++)
                 {
-                    int n = random.Next(0, 25 - i);
-                    this.gameBoard[i, j] = Des[n];
+                    int n = random.Next(0, Des.Count - 1);
+                    this.gameBoard[i, j] = 
+                        Des[n];
                     Des.RemoveAt(n);
                     this.gameBoard[i, j].lance();
                 }
