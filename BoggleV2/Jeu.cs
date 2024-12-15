@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,13 +21,62 @@ namespace BoggleV2
             Console.WriteLine("+--------------------------------------------------------+");
             Console.WriteLine("\npar Grégoire LEGROS et Maximilien BERNARD\n\n");
 
+            Console.WriteLine("Voulez vous jouer seul ou à deux ?");
+
+            Console.WriteLine("\t tapez \"Solo\" pour jouer seul et \"Duo\" pour jouer à deux.");
+            string Mode = Console.ReadLine();
+            Mode = Mode.ToUpper();
+            while (Mode != "SOLO" && Mode != "DUO")
+            {
+                Console.WriteLine("Ce mode n'est pas compris.");
+                Mode = Console.ReadLine();
+                Mode = Mode.ToUpper();
+            }
+
+            if (Mode == "SOLO") Solo();
+            else Duo();
+
+
+        }
+        public void Solo()
+        {
+            joueur1 = new Joueur("Joueur");
+            joueur2 = new Joueur("IA");
+            CreationDico();
+            CreationPlateau();
+            DemandeTemps();
+
+            Console.WriteLine("Vous pouvez commencer.");
+
+            joueur1 = Round(joueur1);
+
+            Console.WriteLine("Fin. \n Votre score est désormais de " + joueur1.Score + ".");
+
+            Console.WriteLine("\nL'IA troue les mots :");
+            for (int i = 0; i < dico.dictionnaire.Length; i++)
+            {
+                if (plateau.Test_Plateau(dico.dictionnaire[i], dico))
+                {
+                    Console.WriteLine(dico.dictionnaire[i]);
+                    joueur2.Add_Score(dico.dictionnaire[i]);
+                }
+            }
+
+            Console.WriteLine("Fin. \n Son score est désormais de " + joueur2.Score + ".");
+
+
+
+        }
+
+        public void Duo()
+        {
             Console.WriteLine("Quel est le nom du premier joueur ?");
             string nom = Console.ReadLine();
             joueur1 = new Joueur(nom);
 
             Console.WriteLine("Quel est le nom du second joueur ?");
             nom = Console.ReadLine();
-            joueur2= new Joueur(nom);
+            joueur2 = new Joueur(nom);
 
             Console.WriteLine("\tLe premier joueur est " + joueur1.Nom + " et le second joueur est " + joueur2.Nom + ".");
 
@@ -39,11 +88,10 @@ namespace BoggleV2
 
             for (int i = 0; i < nombreDeRounds; i++)
             {
+                plateau.Melange();
 
-
-                Console.WriteLine("\n\tLe tours " + i + " va commencer.");
-
-                Console.WriteLine(joueur1.Nom + " peut comencer.");
+                Console.WriteLine("\n\tLe tours " + (i + 1) + " va commencer.");
+                Console.WriteLine(joueur1.Nom + " peut commencer.");
 
                 joueur1 = Round(joueur1);
 
@@ -51,7 +99,7 @@ namespace BoggleV2
 
 
 
-                Console.WriteLine("\n" + joueur2.Nom + " peut comencer.");
+                Console.WriteLine("\n" + joueur2.Nom + " peut commencer.");
 
                 joueur2 = Round(joueur2);
 
@@ -63,11 +111,11 @@ namespace BoggleV2
 
 
             // Traitement fin de partie
-            if(joueur1.Score > joueur2.Score)
+            if (joueur1.Score > joueur2.Score)
             {
                 Console.WriteLine("\n\n\t" + joueur1.Nom + " à gagner !!!\n\tLe score est de " + joueur1.Score + " à " + joueur2.Score + ".");
             }
-            else if(joueur2.Score > joueur1.Score)
+            else if (joueur2.Score > joueur1.Score)
             {
 
                 Console.WriteLine("\n\n\t" + joueur2.Nom + " à gagner !!!\n\tLe score est de " + joueur2.Score + " à " + joueur1.Score + ".");
@@ -76,9 +124,8 @@ namespace BoggleV2
             {
                 Console.WriteLine("\n\n\tIl y a égalité !!! Les deux joueurs ont un score de " + joueur1.Score + ".");
             }
-
-
         }
+
 
         public Joueur Round(Joueur joueur)
         {
@@ -95,12 +142,12 @@ namespace BoggleV2
             {
                 bool ok = false;
                 string mot = Console.ReadLine();
-                
 
-                for(int i = 0; i < mots.Count; i++)
+
+                for (int i = 0; i < mots.Count; i++)
                 {
                     if (mots[i] == mot)
-                    {   
+                    {
                         Console.WriteLine("Ce mot à déja été trouvé !");
                         ok = true;
                     }
@@ -161,7 +208,7 @@ namespace BoggleV2
         {
             Console.WriteLine("\nQuelle taille de plateau voulez-vous ?");
             int n = 0;
-            while(n < 3 || n > 10)
+            while (n < 3 || n > 10)
             {
                 n = Convert.ToInt32(Console.ReadLine());
                 if (n < 3) Console.WriteLine("\tLa taille est trop petite (3 ou plus), veuillez donner une taille valide.");
