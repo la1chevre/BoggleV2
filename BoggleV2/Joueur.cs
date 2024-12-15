@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -81,6 +81,8 @@ namespace BoggleV2
             }
             return res;
         }
+
+
         /// <summary>
         /// Ajoute au joueur le score lié au mot donné en paramètres
         /// </summary>
