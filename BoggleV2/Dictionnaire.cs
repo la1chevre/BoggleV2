@@ -60,42 +60,42 @@ namespace BoggleV2
 
             // le nombre de mot avec des longueurs similaires
             
-            Dictionary<int, int> NbMotLongeur = new Dictionary<int, int>();
+            Dictionary<int, int> nbMotLongeur = new Dictionary<int, int>();
             for (int i = 0; i < dictionnaire.Length; i++)
             {
-                if (NbMotLongeur.ContainsKey(dictionnaire[i].Length))
+                if (nbMotLongeur.ContainsKey(dictionnaire[i].Length))
                 {
-                    NbMotLongeur[dictionnaire[i].Length]++;
+                    nbMotLongeur[dictionnaire[i].Length]++;
                 }
                 else
                 {
-                    NbMotLongeur.Add(dictionnaire[i].Length, 1);
+                    nbMotLongeur.Add(dictionnaire[i].Length, 1);
                 }
             }
 
-            foreach (int key in NbMotLongeur.Keys)
+            foreach (int key in nbMotLongeur.Keys)
             {
-                res += "il y a " + NbMotLongeur[key] + " mot(s) de longueur " + key + "\n";
+                res += "il y a " + nbMotLongeur[key] + " mot(s) de longueur " + key + "\n";
             }
 
             // le nombre de mot commencant par chaque lettre
 
-            Dictionary<char, int> NbMotLettre = new Dictionary<char, int>();
+            Dictionary<char, int> nbMotLettre = new Dictionary<char, int>();
             for (int i = 0; i < dictionnaire.Length; i++)
             {
-                if (NbMotLettre.ContainsKey(dictionnaire[i][0]))
+                if (nbMotLettre.ContainsKey(dictionnaire[i][0]))
                 {
-                    NbMotLettre[dictionnaire[i][0]]++;
+                    nbMotLettre[dictionnaire[i][0]]++;
                 }
                 else
                 {
-                    NbMotLettre.Add(dictionnaire[i][0], 1);
+                    nbMotLettre.Add(dictionnaire[i][0], 1);
                 }
             }
             res += "le nombre de mot commencant par chaque lettre : \n";
-            foreach (char key in NbMotLettre.Keys)
+            foreach (char key in nbMotLettre.Keys)
             {
-                res += "il y a " + NbMotLettre[key] + "commencant par la lettre " + key;
+                res += "il y a " + nbMotLettre[key] + "commencant par la lettre " + key;
             }
 
             return res;
@@ -107,8 +107,8 @@ namespace BoggleV2
         /// </summary>
         /// <param name="t"> le tableau doit être trié</param>
         /// <param name="val">valeur a trouvé</param>
-        /// <param name="fin"></param>
-        /// <param name="debut"></param>
+        /// <param name="fin">indice fin de recherche</param>
+        /// <param name="debut">indice debut de recherche</param>
         /// <returns>true si le tableau contient la valeur</returns>
         public static bool RechercheDichoRecursif(string[] t, string val, int fin, int debut)
         {

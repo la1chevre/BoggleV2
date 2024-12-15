@@ -4,7 +4,14 @@ namespace BoggleV2
     {
         static void Main(string[] args)
         {
-            Jeu partie = new Jeu();
+            //Jeu partie = new Jeu();
+            Dictionnaire d = new Dictionnaire("fr");
+            for(int i = 0; i < d.dictionnaire.Length; i++)
+            {
+                Console.Write(d.dictionnaire[i]+" ");
+            }
+            //string a = d.toString();
+            //Console.WriteLine(a);
         }
     }
 }
