@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -42,11 +42,9 @@ namespace BoggleV2
             {
                 Console.WriteLine("Langue inconnue");
                 this.dictionnaire = new string[0];
-
-
             }
 
-
+            dictionnaire = TriFusion(dictionnaire, 0, dictionnaire.Length - 1);
         }
 
 
@@ -245,4 +243,3 @@ namespace BoggleV2
         #endregion
     }
 }
-
