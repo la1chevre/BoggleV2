@@ -11,9 +11,7 @@ namespace BoggleV2
             Jeu partie = new Jeu();
             //Temps_ExecutionTri();
             //Temps_ExecutionRecherche();
-            //Dictionnaire d = new Dictionnaire("fr");
-            //string a = d.toString();
-            //Console.WriteLine(a);
+            
 
         }
 
@@ -67,7 +65,7 @@ namespace BoggleV2
 
             Dictionnaire d2 = new Dictionnaire("fr");
             chrono.Restart();
-            bool res2 = Dictionnaire.RechercheClassique(d2.dictionnaire, mot);
+            bool res2 = Dictionnaire.RechercheClassique(d1.dictionnaire, mot);
             Console.WriteLine(res2);
             chrono.Stop();
             Console.WriteLine("la recherche classique a pris " + chrono.ElapsedMilliseconds + "ms pour s'effectuer");

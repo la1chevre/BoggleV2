@@ -66,9 +66,10 @@ namespace BoggleV2
 
         [TestMethod]
 
-        public void Test_AdjacencePlateau()
+        public void Test_CalculScore()
         {
-
+            Joueur j1 = new Joueur("h");
+            Assert.AreEqual(j1.CalculScore("a"), 1);
         }
 
        

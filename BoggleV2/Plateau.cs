@@ -54,6 +54,7 @@ namespace BoggleV2
             return txt;
         }
 
+        
         public bool Test_Plateau(string mot, Dictionnaire Dico)
         {
             mot = mot.ToUpper();
@@ -61,7 +62,7 @@ namespace BoggleV2
             // pour chaque fois que la case = première lettre on fait le test d'adjacence de toute les lettres
             for (int i = 0; i < gameBoard.GetLength(0); i++)
             {
-                for (int j = 0; j < gameBoard.GetLength(0); j++)
+                for (int j = 0; j < gameBoard.GetLength(1); j++)
                 {
                     if (Test_AdjacenceRec(mot, i, j, new int[0][])) TestBon = true;
                 }

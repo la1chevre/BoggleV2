@@ -324,7 +324,7 @@ namespace BoggleV2
 
 
             Dictionary<string, int> MotsScores = new Dictionary<string, int>();
-            foreach (var mot in mots)
+            foreach (string mot in mots)
             {
                 MotsScores[mot] = joueur1.CalculScore(mot);
             }
@@ -343,10 +343,10 @@ namespace BoggleV2
 
                 int x = 300, y = 200;
 
-                foreach (var entry in MotsScores)
+                foreach (var paire in MotsScores)
                 {
-                    string mot = entry.Key;
-                    int score = entry.Value;
+                    string mot = paire.Key;
+                    int score = paire.Value;
 
                     int fontSize = Math.Max(10, score * 5);
                     using (SKPaint paint = new SKPaint

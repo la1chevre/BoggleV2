@@ -141,9 +141,9 @@ namespace BoggleV2
         {
             bool res = false;
             val = val.ToUpper();
-            foreach(string s in t) 
+            for(int i = 0; i < t.Length; i++) 
             {
-                if (s == val)
+                if (t[i] == val)
                 {
                     res = true;
                 }

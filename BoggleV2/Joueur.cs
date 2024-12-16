@@ -112,21 +112,25 @@ namespace BoggleV2
 
             Dictionary<char, int> PoidLettre = new Dictionary<char, int>();
             string Chemin = "PoidsLettres.txt";
-            string[] lignes = File.ReadAllLines(Chemin);
-
-            foreach (string ligne in lignes)
+            try
             {
-                string[] partie = ligne.Split(';');
-                char key = partie[0][0];// la premiere partie est la lettre
-                PoidLettre[key] = int.Parse(partie[1]);// ajoute le score de la lettre
-            }
+                string[] lignes = File.ReadAllLines(Chemin);
+
+                foreach (string ligne in lignes)
+                {
+                    string[] partie = ligne.Split(';');
+                    char key = partie[0][0];// la premiere partie est la lettre
+                    PoidLettre[key] = int.Parse(partie[1]);// ajoute le score de la lettre
+                }
 
 
-            for (int i = 0; i < mot.Length; i++)
-            {
-                Score += PoidLettre[mot[i]];
+                for (int i = 0; i < mot.Length; i++)
+                {
+                    Score += PoidLettre[mot[i]];
+                }
+                return Score;
             }
-            return Score;
+            catch(FileNotFoundException  e) { Console.WriteLine("fichier introuvable " + e.Message);return 0; }
         }
     }
 }
