@@ -349,7 +349,7 @@ namespace BoggleV2
             }
             for (int i = 0; i < joueur2.Mots.Length; i++)
             {
-                if (joueur2.Mots[i] != null && !mots.Contains(joueur2.Mots[i].ToUpper())) mots.Add(joueur2.Mots[i].ToUpper()); Console.WriteLine(joueur2.Mots[i]);
+                if (joueur2.Mots[i] != null && !mots.Contains(joueur2.Mots[i].ToUpper())) mots.Add(joueur2.Mots[i].ToUpper());
             }
 
 
