@@ -30,7 +30,7 @@ namespace BoggleV2
                     gameBoard[i, j] = new De();
                     gameBoard[i, j].lance();
                     ConditionLettre[gameBoard[i, j].face]--;
-                    while (ConditionLettre[gameBoard[i, j].face] < 0)
+                    while (ConditionLettre[gameBoard[i, j].face] <= 0)
                     {
                         gameBoard[i, j].lance();
                     }
@@ -144,7 +144,7 @@ namespace BoggleV2
                     
                     string[] partie = ligne.Split(';');
                     char key = partie[0][0];// la premiere partie est la lettre
-                    ConditionLettre[key] = int.Parse(partie[1]);// ajoute la valeur corrspondant au nombre max d'occurence de la lettre dans le plateau
+                    ConditionLettre[key] = int.Parse(partie[1])*taille/4;// ajoute la valeur corrspondant au nombre max d'occurence de la lettre dans le plateau
 
                 }
             }
@@ -159,8 +159,11 @@ namespace BoggleV2
         /// <summary>
         /// Melange le plateau pour en créer un nouveau à partir des dés déjà existants.
         /// </summary>
-        public void Melange()
+        /// <param name="taille"></param>
+        public void Melange(int taille)
         {
+
+            Dictionary<char, int> ConditionLettre = this.DicoConditionLettre(taille);
             List<De> Des = new List<De>();
             for (int i = 0; i < this.gameBoard.GetLength(0); i++)
             {
@@ -175,10 +178,14 @@ namespace BoggleV2
                 for (int j = 0; j < this.gameBoard.GetLength(1); j++)
                 {
                     int n = random.Next(0, Des.Count - 1);
-                    this.gameBoard[i, j] = 
-                        Des[n];
+                    this.gameBoard[i, j] = Des[n];
                     Des.RemoveAt(n);
                     this.gameBoard[i, j].lance();
+                    ConditionLettre[gameBoard[i, j].face]--;
+                    while (ConditionLettre[gameBoard[i, j].face] <= 0)
+                    {
+                        gameBoard[i, j].lance();
+                    }
                 }
             }
         }

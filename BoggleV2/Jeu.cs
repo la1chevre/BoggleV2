@@ -16,6 +16,7 @@ namespace BoggleV2
         private Plateau plateau;
         private Dictionnaire dico;
         private int dureeRound;
+        private int taille;
 
         public Jeu()
         {
@@ -109,7 +110,7 @@ namespace BoggleV2
 
             for (int i = 0; i < nombreDeRounds; i++)
             {
-                if (i != 0) { plateau.Melange(); }
+                if (i != 0) { plateau.Melange(this.taille); }
 
 
                 Console.WriteLine("\n\tLe tours " + (i + 1) + " va commencer.");
@@ -255,6 +256,7 @@ namespace BoggleV2
             Console.WriteLine("\tLa taille définie est " + n + ".");
 
             plateau = new Plateau(n);
+            this.taille = n;
 
         }
 
@@ -321,8 +323,6 @@ namespace BoggleV2
             }
 
 
-
-            // Calcul des scores des mots
             Dictionary<string, int> MotsScores = new Dictionary<string, int>();
             foreach (var mot in mots)
             {
@@ -333,16 +333,14 @@ namespace BoggleV2
             int height = 600;
 
 
-            // Créer une image vierge avec SkiaSharp
             using (SKBitmap bitmap = new SKBitmap(width, height))
             using (SKCanvas canvas = new SKCanvas(bitmap))
             {
-                // Remplir le fond avec une couleur blanche
                 canvas.Clear(SKColors.White);
+
 
                 Random random = new Random();
 
-                // Position initiale pour dessiner les mots
                 int x = 300, y = 200;
 
                 foreach (var entry in MotsScores)
@@ -350,7 +348,6 @@ namespace BoggleV2
                     string mot = entry.Key;
                     int score = entry.Value;
 
-                    // Taille de police proportionnelle au score
                     int fontSize = Math.Max(10, score * 5);
                     using (SKPaint paint = new SKPaint
                     {
@@ -361,33 +358,24 @@ namespace BoggleV2
                             (byte)random.Next(50, 256),
                             (byte)random.Next(50, 256),
                             (byte)random.Next(50, 256)
-                        )
+                            )
+                    
                     })
                     {
-                        // Calculer la taille du mot
                         SKRect bounds = new SKRect();
                         paint.MeasureText(mot, ref bounds);
 
-                        // Si le mot dépasse les limites, sauter à une nouvelle ligne
                         if (x + bounds.Width > width)
                         {
                             x = 10;
                             y += (int)bounds.Height + 10;
                         }
 
-                        // Dessiner le mot
                         canvas.DrawText(mot, x, y, paint);
 
-                        // Mettre à jour la position pour le prochain mot
                         x += (int)bounds.Width + 10;
-
-                        // Si la hauteur dépasse la taille de l'image, arrêter d'ajouter des mots
-                        if (y + bounds.Height > height)
-                            break;
                     }
                 }
-
-                // Sauvegarder l'image dans un fichier PNG
                 using (SKImage image = SKImage.FromBitmap(bitmap))
                 using (SKData data = image.Encode(SKEncodedImageFormat.Png, 100))
                 using (System.IO.Stream stream = System.IO.File.OpenWrite("nuage_de_mots.png"))
@@ -397,20 +385,12 @@ namespace BoggleV2
 
             }
 
-
-            Console.WriteLine($"Nuage de mots généré : {"nuage_de_mots.png"}");
-
-            string filePath = "nuage_de_mots.png";
-
-
-            // Ouvrir le fichier PNG avec l'application par défaut
             Process.Start(new ProcessStartInfo
             {
-                FileName = filePath,
+                FileName = "nuage_de_mots.png",
                 UseShellExecute = true
             });
 
-            Console.WriteLine($"Image ouverte : {filePath}");
         }
     }
 }

@@ -59,8 +59,15 @@ namespace BoggleV2
         {
             string[] mots = { "ARBRE",  "ATTENDRE", "GARE", "SERRE" ,"ZEBRE"};
             Array.Sort(mots);
-            Assert.IsTrue(Dictionnaire.RechercheDichoRecursif(mots,"GARE",mots.Length-1,0));
-            Assert.IsFalse(Dictionnaire.RechercheDichoRecursif(mots, "VIN", mots.Length - 1, 0));
+            Assert.IsTrue(Dictionnaire.RechercheDichoRecursif(mots,"GARE",0, mots.Length - 1));
+            Assert.IsFalse(Dictionnaire.RechercheDichoRecursif(mots, "VIN", 0,mots.Length-1));
+
+        }
+
+        [TestMethod]
+
+        public void Test_AdjacencePlateau()
+        {
 
         }
 
