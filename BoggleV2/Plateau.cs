@@ -40,6 +40,10 @@ namespace BoggleV2
             
         }
 
+        /// <summary>
+        /// Crée un string comportant l'affichage du plateau
+        /// </summary>
+        /// <returns></returns>
         public string toString()
         {
             string txt = "\t";
@@ -54,7 +58,12 @@ namespace BoggleV2
             return txt;
         }
 
-        
+        /// <summary>
+        /// Test si le mot passer en paramètres est sur le plateau et si il appartient au dictionnaire.
+        /// </summary>
+        /// <param name="mot">Le mot à tester</param>
+        /// <param name="Dico">Le dictionnaire à partir duquel la présence du mot est tester</param>
+        /// <returns></returns>
         public bool Test_Plateau(string mot, Dictionnaire Dico)
         {
             mot = mot.ToUpper();
