@@ -137,6 +137,12 @@ namespace BoggleV2
             }
         }
 
+        /// <summary>
+        /// Recherche dite classique parcourant le tableau de string en testant si la valeur est présente
+        /// </summary>
+        /// <param name="t"></param>
+        /// <param name="val"></param>
+        /// <returns></returns>
         public static bool RechercheClassique(string[] t , string val)
         {
             bool res = false;
@@ -182,7 +188,12 @@ namespace BoggleV2
             return dictionnaire;
 
         }
-
+        /// <summary>
+        /// Fonction associé à TriFusion assemblant deux tableaux de strings
+        /// </summary>
+        /// <param name="gauche"></param>
+        /// <param name="droit"></param>
+        /// <returns></returns>
         static string[] Fusion(string[] gauche, string[] droit)
         {
             string[] t = new string[gauche.Length + droit.Length];
@@ -245,7 +256,11 @@ namespace BoggleV2
 
         // TRI INSERTION
 
-
+        /// <summary>
+        /// Tri par intertion d'un tableau de string
+        /// </summary>
+        /// <param name="dictionnaire"></param>
+        /// <returns></returns>
         public static string[] TriInsertion(string[] dictionnaire)
         {
             for (int i = 1; i < dictionnaire.Length; i++)
