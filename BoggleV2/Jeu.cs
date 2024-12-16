@@ -42,6 +42,10 @@ namespace BoggleV2
 
 
         }
+
+        /// <summary>
+        /// Le mode de jeu joeur vs IA
+        /// </summary>
         public void Solo()
         {
             joueur1 = new Joueur("Joueur");
@@ -89,7 +93,10 @@ namespace BoggleV2
             nuagedeMots();
 
         }
-
+        
+        /// <summary>
+        /// Le mode de jeu 1 vs 1 entre deux joueurs
+        /// </summary>
         public void Duo()
         {
             Console.WriteLine("Quel est le nom du premier joueur ?");
@@ -151,7 +158,11 @@ namespace BoggleV2
             nuagedeMots();
         }
 
-
+        /// <summary>
+        /// Joue un round du joueur
+        /// </summary>
+        /// <param name="joueur">Le joueurs qui rentre les mots et dont le score augmente</param>
+        /// <returns></returns>
         public Joueur Round(Joueur joueur)
         {
 
@@ -201,6 +212,11 @@ namespace BoggleV2
             return joueur;
         }
 
+        
+        /// <summary>
+        /// Création du dictionnaire de jeu (Français ou anglais)
+        /// </summary>
+        /// <param name="phrase">booléen permettant de savoir si c'est la première itération de la fonction</param>
         public void CreationDico(bool phrase = true)
         {
             if (phrase)
@@ -229,6 +245,9 @@ namespace BoggleV2
             }
         }
 
+        /// <summary>
+        /// Crétion du plateau de jeu, une matrice de Dé() carré d'une taille entre 3*3 et 10*10 inclus.
+        /// </summary>
         public void CreationPlateau()
         {
             Console.WriteLine("\nQuelle taille de plateau voulez-vous ?");
@@ -260,6 +279,9 @@ namespace BoggleV2
 
         }
 
+        /// <summary>
+        /// Demande la durée d'un tour de jeu en secondes, il doit faire plus de 5s.
+        /// </summary>
         public void DemandeTemps()
         {
             Console.WriteLine("\nCombien de temps doit durer un tour ? \n\tLe temps est en secondes.");
@@ -285,6 +307,10 @@ namespace BoggleV2
             dureeRound = n;
         }
 
+        /// <summary>
+        /// Demande le nombre de rounds à jouer pour le mode duo uniquement
+        /// </summary>
+        /// <returns></returns>
         public int DemandeRound()
         {
             Console.WriteLine("\nCombien de tours doit durer la partie ? \n\tUn tour est joué par chacun des joueurs.");
@@ -310,6 +336,10 @@ namespace BoggleV2
             return n;
         }
 
+
+        /// <summary>
+        /// Génère une image comportatn un nuage de mots créé à partir des mots donnés par les deux joueurs (ou joueur et IA) puis l'ouvre.
+        /// </summary>
         public void nuagedeMots()
         {
             List<string> mots = new List<string>();
